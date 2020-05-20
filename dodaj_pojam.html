@@ -1,0 +1,100 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>ZGeo</title>
+</head>
+
+<body style="background-color: lightgray;">
+    <div class="container">
+        <div class="col-10 text-center">
+            <header>
+                <h1 class="h1 text-center bg-primary p-1 text-white">Zanimljiva Geografija</h1>
+            </header>
+            
+            <div id="divUser" class="alert-info mb-2 text-center rounded-sm"></div>
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Pocetna</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="dodaj_pojam.html">Pojmovi</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+    
+            <form id="formPojam">
+                <div class="form-group">
+                    <select class="custom-select">
+                        <option selected>Izbaberite kategoriju</option>
+                        <option value="Država">Država</option>
+                        <option value="Reka">Reka</option>
+                        <option value="Planina">Planina</option>
+                        <option value="Grad">Grad</option>
+                        <option value="Biljka">Biljka</option>
+                        <option value="Životinja">Životinja</option>
+                        <option value="Predmet">Predmet</option>
+                        <option value="Ime">Ime</option>
+                    </select>
+                    <input type="text" class="form-control mt-1" id="inputPojam" name="inputUsername"
+                        placeholder="Unesite izabrani pojam" aria-describedby="emailHelp">
+                    <input type="submit" class="btn btn-primary btn-block mt-2" value="Dodaj">
+                </div>
+            </form>    
+        </div>
+    </div>
+    
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCHqmuodWdVSdcXzbBNLhhm9TuU0G3ljwE",
+            authDomain: "zgeografija-7bacb.firebaseapp.com",
+            databaseURL: "https://zgeografija-7bacb.firebaseio.com",
+            projectId: "zgeografija-7bacb",
+            storageBucket: "zgeografija-7bacb.appspot.com",
+            messagingSenderId: "548869104442",
+            appId: "1:548869104442:web:dbc23fa5d2b413b5b52603",
+            measurementId: "G-1DJLY0GVSD"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        let db = firebase.firestore();
+
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>
