@@ -45,6 +45,13 @@ if (location.pathname.slice(1) == 'dodaj_pojam.html') {
         let formatiranPojam = noWhitespace.charAt(0).toUpperCase() + noWhitespace.slice(1);
         //console.log(document.querySelector('select').value);
         //console.log(formatiranPojam);
+        let specialPocetnoSlovo;
+
+        if(noWhitespace.slice(0, 2) === 'nj' || 'lj' || 'dž') {
+            specialPocetnoSlovo = noWhitespace.charAt(0).toUpperCase() + noWhitespace.slice(1, 2);
+        } else {
+            specialPocetnoSlovo = noWhitespace.charAt(0).toUpperCase() + noWhitespace.slice(1);
+        }
 
         let pojmovi = db.collection('pojmovi');
 
@@ -61,7 +68,7 @@ if (location.pathname.slice(1) == 'dodaj_pojam.html') {
                     pojmovi.doc().set({
                         kategorija: selektovanPojam,
                         korisnik: localStorage.username,
-                        pocetnoSlovo: formatiranPojam.charAt(0),
+                        pocetnoSlovo: specialPocetnoSlovo,
                         pojam: formatiranPojam,
                         vreme: firebase.firestore.Timestamp.fromDate(currentDate)
                     })
