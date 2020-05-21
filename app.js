@@ -5,14 +5,19 @@ let inputUsername = document.querySelector('#inputUsername');
 let divUser = document.querySelector('#divUser');
 let formPojam = document.querySelector('#formPojam');
 let inputPojam = document.querySelector('#inputPojam');
+let linkPojmovi = document.getElementById('linkPojmovi');
+
+//console.log(linkPojmovi);
 
 
-// Prikaz korisnickog imena, ako postoiji
+// Prikaz korisnickog imena, ako postoiji i sakrivanje link pojmovi
 if (localStorage.username) {
     //console.log(localStorage.username)
     divUser.innerHTML = `Vase korisnicko ime je: <span class='text-danger'>${localStorage.username}</span>`;
+    location.pathname.slice(1) ? 'index.html' : linkPojmovi.style.visibility = 'visible';
 } else {
     divUser.innerHTML = ``;
+    linkPojmovi.style.visibility = 'hidden';
 }
 
 // Postavljanje korisnickog imena u localstorage
@@ -46,30 +51,32 @@ if (location.pathname.slice(1) == 'dodaj_pojam.html') {
         pojmovi.where('kategorija', '==', selektovanPojam)
             .where('pojam', '==', formatiranPojam)
             .get()
-            .then(
-                    alert(`Pojam '${formatiranPojam}' vec postoji za izabranu kategoriju: ${selektovanPojam}`))
-            .catch(error => {
-                console.error("Cannot get documents from collection: ", error);
-            });
+            .then(snapshot => {
+                if (snapshot.docs.length) {
+                    alert(`Pojam '${formatiranPojam}' vec postoji za izabranu kategoriju: ${selektovanPojam}`);
+                    console.log(snapshot.docs.length);
+                } else {
+                    let currentDate = new Date();
 
-
-
-        let currentDate = new Date();
-
-        pojmovi.doc().set({
-            kategorija: selektovanPojam,
-            korisnik: localStorage.username,
-            pocetnoSlovo: formatiranPojam.charAt(0),
-            pojam: formatiranPojam,
-            vreme: firebase.firestore.Timestamp.fromDate(currentDate)
-        })
-            .then(() => {
-                alert(`Uspesno ste dodali pojam '${formatiranPojam}' sa kategorijom: ${selektovanPojam} u bazu`);
+                    pojmovi.doc().set({
+                        kategorija: selektovanPojam,
+                        korisnik: localStorage.username,
+                        pocetnoSlovo: formatiranPojam.charAt(0),
+                        pojam: formatiranPojam,
+                        vreme: firebase.firestore.Timestamp.fromDate(currentDate)
+                    })
+                        .then(() => {
+                            alert(`Uspesno ste dodali pojam '${formatiranPojam}' sa kategorijom: ${selektovanPojam} u bazu`);
+                        })
+                        .catch(error => {
+                            console.error("Cannot get documents from collection: ", error);
+                        });
+                    formPojam.reset();
+                }
             })
             .catch(error => {
                 console.error("Cannot get documents from collection: ", error);
             });
-        formPojam.reset();
 
     });
 }
