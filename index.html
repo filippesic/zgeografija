@@ -14,14 +14,16 @@
             <header>
                 <h1 class="h1 text-center bg-primary p-2 text-white rounded-sm">Zanimljiva Geografija</h1>
             </header>
-            
+
             <div id="divUser" class="alert-info mb-2 text-center rounded-sm"></div>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
@@ -33,10 +35,11 @@
                     </ul>
                 </div>
             </nav>
-            
+
             <form id="formUsername">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="inputUsername" name="inputUsername" placeholder="Unesite korisnicko ime" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" id="inputUsername" name="inputUsername"
+                        placeholder="Unesite korisnicko ime" aria-describedby="emailHelp">
                     <input type="submit" class="btn btn-primary mt-2 btn-block" value="Potvrdi">
                 </div>
             </form>
@@ -63,7 +66,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-firestore.js"></script>
 
     <script>
-    // Your web app's Firebase configuration
+        // Your web app's Firebase configuration
         var firebaseConfig = {
             apiKey: "AIzaSyCHqmuodWdVSdcXzbBNLhhm9TuU0G3ljwE",
             authDomain: "zgeografija-7bacb.firebaseapp.com",
@@ -76,9 +79,8 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+        // firebase.analytics();
         let db = firebase.firestore();
-
     </script>
     <script src="app.js"></script>
 </body>

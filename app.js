@@ -47,11 +47,12 @@ if (location.pathname.slice(1) == 'dodaj_pojam.html') {
         //console.log(document.querySelector('select').value);
         //console.log(formatiranPojam);
         let specialPocetnoSlovo;
+        console.log('-------------------------');
 
-        if (noWhitespace.slice(0, 2) === 'nj' || 'lj' || 'dž') {
+        if (noWhitespace.slice(0, 2) == 'nj' || noWhitespace.slice(0, 2) == 'lj' || noWhitespace.slice(0, 2) == 'dž') {
             specialPocetnoSlovo = noWhitespace.charAt(0).toUpperCase() + noWhitespace.slice(1, 2);
         } else {
-            specialPocetnoSlovo = noWhitespace.charAt(0).toUpperCase() + noWhitespace.slice(1);
+            specialPocetnoSlovo = noWhitespace.charAt(0).toUpperCase();
         }
 
         // Provera i dodavanje da li izabrani pojam vec postoji u bazi
