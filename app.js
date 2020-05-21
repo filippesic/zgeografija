@@ -6,6 +6,7 @@ let divUser = document.querySelector('#divUser');
 let formPojam = document.querySelector('#formPojam');
 let inputPojam = document.querySelector('#inputPojam');
 let linkPojmovi = document.getElementById('linkPojmovi');
+let pojmovi = db.collection('pojmovi');
 
 //console.log(linkPojmovi);
 
@@ -33,7 +34,7 @@ if (location.pathname.slice(1) != 'dodaj_pojam.html') {
     });
 }
 
-// Dodavanje pojma i provera da li vec postoji u bazi isti
+// Formatiranje podataka za bazu
 if (location.pathname.slice(1) == 'dodaj_pojam.html') {
     formPojam.addEventListener('submit', e => {
         e.preventDefault();
@@ -47,14 +48,13 @@ if (location.pathname.slice(1) == 'dodaj_pojam.html') {
         //console.log(formatiranPojam);
         let specialPocetnoSlovo;
 
-        if(noWhitespace.slice(0, 2) === 'nj' || 'lj' || 'dž') {
+        if (noWhitespace.slice(0, 2) === 'nj' || 'lj' || 'dž') {
             specialPocetnoSlovo = noWhitespace.charAt(0).toUpperCase() + noWhitespace.slice(1, 2);
         } else {
             specialPocetnoSlovo = noWhitespace.charAt(0).toUpperCase() + noWhitespace.slice(1);
         }
 
-        let pojmovi = db.collection('pojmovi');
-
+        // Provera i dodavanje da li izabrani pojam vec postoji u bazi
         pojmovi.where('kategorija', '==', selektovanPojam)
             .where('pojam', '==', formatiranPojam)
             .get()
@@ -87,6 +87,49 @@ if (location.pathname.slice(1) == 'dodaj_pojam.html') {
 
     });
 }
+
+
+pojmovi
+    .orderBy('korisnik', 'asc')
+    .get()
+    .then(
+        snapshot => {
+            let count = {};
+            //let users = [];
+            //let niz = [];
+            //let temp = snapshot.docs[0].data().korisnik;
+            //console.log(snapshot.docs);
+            //console.log(temp);
+            //let counter = 0;
+            snapshot.docs.forEach(doc => {
+                count[doc.data().korisnik] = (count[doc.data().korisnik] || 0) + 1;
+                // Get an array of the keys:
+
+                // Then sort by using the keys to lookup the values in the original object:
+
+                //users.push(doc.data().korisnik);
+                //console.log(count);
+                //console.log(index);
+                //console.log(doc.data().korisnik)
+                // if(temp == users[index]) {
+                //     //console.log(temp.korisnik == doc.data().korisnik);
+                //     counter++;
+                //     niz.push([users[index], counter]);
+                // } else {
+                //     counter = 0;
+                //     temp = users[index];
+                //     niz.push([users[index], counter]);
+                //     counter++;
+                // }
+            });
+            let keys = Object.keys(count);
+            keys.sort(function (a, b) { return count[b] - count[a] });
+            console.log(keys);
+            console.log(count);
+            // console.log(users);
+            //console.log(niz);
+        }
+    );
 
 
 // db.collection('pojmovi').get()
