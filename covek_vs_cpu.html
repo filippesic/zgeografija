@@ -33,18 +33,60 @@
                         <li class="nav-item">
                             <a id="linkPojmovi" class="nav-link" href="dodaj_pojam.html">Pojmovi</a>
                         </li>
-                        <li class="nav-item">
-                            <a id="linkPojmovi" class="nav-link" href="covek_vs_cpu.html">Covek vs. Racunar</a>
-                        </li>
                     </ul>
                 </div>
             </nav>
 
-            <form id="formUsername">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="inputUsername" name="inputUsername"
-                        placeholder="Unesite korisnicko ime" aria-describedby="emailHelp" required>
-                    <input type="submit" class="btn btn-primary mt-2 btn-block" value="Potvrdi">
+            <button class="btn btn-danger btn-block" id="startTimer">Start</button>
+            <div class="alert alert-success mt-2" role="alert" id="rSlovo"></div>
+
+            <form id="formStartGame">
+                <div class="form-group row">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Država:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputDrzava" placeholder="Unesite državu..">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label">Reka:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputReka" placeholder="Unesite reku..">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Planina:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputPlanina" placeholder="Unesite planinu..">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Grad:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputGrad" placeholder="Unesite grad..">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Biljka:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputBiljka" placeholder="Unesite biljku..">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Životinja:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputZivotinja" placeholder="Unesite životinju..">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Predmet:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputPredmet" placeholder="Unesite predmet..">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <input type="submit" class="btn btn-warning btn-block" value="Potvrdi">
+                    </div>
                 </div>
             </form>
         </div>
