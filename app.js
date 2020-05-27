@@ -8,8 +8,17 @@ let formPojam = document.querySelector('#formPojam');
 let inputPojam = document.querySelector('#inputPojam');
 let linkPojmovi = document.getElementById('linkPojmovi');
 let formStartGame = document.querySelector('#formStartGame');
-let formInputs = document.querySelectorAll('#formStartGame input');
 let startTimer = document.querySelector('#startTimer');
+let vremeAnim = document.querySelector('#vreme');
+let formInputs = document.querySelectorAll('#formStartGame input');
+
+let usrDrzava = document.querySelector('#inputDrzava');
+let usrReka = document.querySelector('#inputReka');
+let usrPlanina = document.querySelector('#inputPlanina');
+let usrGrad = document.querySelector('#inputGrad');
+let usrBiljka = document.querySelector('#inputBiljka');
+let usrZivotinja = document.querySelector('#inputZivotinja');
+let usrPredmet = document.querySelector('#inputPredmet');
 
 
 //console.log(linkPojmovi);
@@ -142,22 +151,23 @@ pojmovi
 if (location.pathname.includes('covek_vs_cpu.html')) {
 
     let abeceda = ['A', 'B', 'C', 'Č', 'Ć', 'D', 'Dž', 'Đ', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Lj', 'N', 'M', 'Nj', 'O', 'P', 'R', 'S', 'Š', 'T', 'U', 'V', 'Z', 'Ž'];
-    //let radnomSlovo = abeceda[Math.floor(Math.random() * abeceda.length)];
-    //document.querySelector('#rSlovo').innerHTML = `Nasumicno izabrano slovo je:  <strong class='badge badge-primary text-wrap' ><h5>${radnomSlovo}</h5></strong>`;
+    let radnomSlovo = abeceda[Math.floor(Math.random() * abeceda.length)];
+    document.querySelector('#rSlovo').innerHTML = `Nasumicno izabrano slovo je:  <strong class='badge badge-primary text-wrap' ><h5>${radnomSlovo}</h5></strong>`;
 
     formStartGame.addEventListener('submit', e => {
         e.preventDefault();
         let formatiranUserInput = [];
         let pocetnaSlova = [];
-        let abeceda = ['A', 'B', 'C', 'Č', 'Ć', 'D', 'Dž', 'Đ', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Lj', 'N', 'M', 'Nj', 'O', 'P', 'R', 'S', 'Š', 'T', 'U', 'V', 'Z', 'Ž'];
-        let randomSlovo = abeceda[Math.floor(Math.random() * abeceda.length)];
+        // let abeceda = ['A', 'B', 'C', 'Č', 'Ć', 'D', 'Dž', 'Đ', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Lj', 'N', 'M', 'Nj', 'O', 'P', 'R', 'S', 'Š', 'T', 'U', 'V', 'Z', 'Ž'];
+        // let randomSlovo = abeceda[Math.floor(Math.random() * abeceda.length)];
 
         // Formatted input from user - no whitespacing, every first letter to upper case
         formInputs.forEach(input => {
-            formatiranUserInput.push(
-                input.value.replace(/\s+/g, '').charAt(0).toUpperCase() + input.value.replace(/\s+/g, '').toLowerCase().slice(1)
-            );
+            formatiranUserInput.push(input.value.replace(/\s+/g, '').charAt(0).toUpperCase() + input.value.replace(/\s+/g, '').toLowerCase().slice(1));
         });
+        formatiranUserInput.splice(-1, 1);
+
+        console.log(formatiranUserInput);
 
         // Every first letter sliced and added to separate array
         formatiranUserInput.forEach(input => {
@@ -167,42 +177,295 @@ if (location.pathname.includes('covek_vs_cpu.html')) {
             } else {
                 pocetnaSlova.push(input.charAt(0));
             }
-
         });
 
 
         // User compare logic
-        pojmovi.where('pocetnoSlovo', '==', 'A').get()
+        // pojmovi.where('pocetnoSlovo', '==', 'A').get()
+        //     .then(snapshot => {
+        //         let poklopoljeniPojmoviUsera = [];
+
+        //         snapshot.docs.forEach(doc => {
+        //             poklopoljeniPojmoviUsera.push(doc.data().pojam);
+        //         })
+        //         console.log(poklopoljeniPojmoviUsera.filter(x => formatiranUserInput.includes(x)))
+        //     });
+
+        /*--------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+        pojmovi.where('pocetnoSlovo', '==', 'A').get() // DRZAVA
             .then(snapshot => {
-                let poklopoljeniPojmoviUsera = [];
-
-                snapshot.docs.forEach(doc => {
-                    poklopoljeniPojmoviUsera.push(doc.data().pojam);
-                })
-                //console.log(poklopoljeniPojmoviUsera.filter(x => formatiranUserInput.includes(x)))
-            });
-
-
-        pojmovi.where('pocetnoSlovo', '==', 'A').get()
-            .then(snapshot => {
+                let pojmoviIzBaze = [];
                 let CPUDrzava;
-                let pojmoviArray = [];
+                let CPUReka;
+                let CPUPlanina;
+                let CPUGrad;
+                let CPUBiljka;
+                let CPUZivotinja;
+                let CPUPredmet;
+
                 snapshot.docs.forEach(doc => {
+                    pojmoviIzBaze.push(doc.data().pojam);
+
                     if (doc.data().kategorija == 'Država') {
-                        let chance = Math.round(Math.random() * 99) + 1;
+                        let pojmoviArray = [];
+                        let chance = Math.random();
                         pojmoviArray.push(doc.data().pojam);
-                        
-                        if (chance <= 80) {
+
+                        if (chance <= 0.8) {
                             //console.log(typeof (doc.data()))
                             CPUDrzava = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
                         } else {
-                            CPUDrzava = 'Nemam pojam!';
+                            CPUDrzava = 'Nemam drzavu!';
                         }
-                        //console.log(CPUDrzava);
+                    }
+                    if (doc.data().kategorija == 'Reka') {
+                        let pojmoviArray = [];
+                        let chance = Math.random();
+                        pojmoviArray.push(doc.data().pojam);
+
+                        if (chance <= 0.8) {
+                            //console.log(typeof (doc.data()))
+                            CPUReka = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+                        } else {
+                            CPUReka = 'Nemam reku!';
+                        }
+                    }
+                    if (doc.data().kategorija == 'Planina') {
+                        let pojmoviArray = [];
+                        let chance = Math.random();
+                        pojmoviArray.push(doc.data().pojam);
+
+                        if (chance <= 0.8) {
+                            //console.log(typeof (doc.data()))
+                            CPUPlanina = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+                        } else {
+                            CPUPlanina = 'Nemam planinu!';
+                        }
+                    }
+                    if (doc.data().kategorija == 'Grad') {
+                        let pojmoviArray = [];
+                        let chance = Math.random();
+                        pojmoviArray.push(doc.data().pojam);
+
+                        if (chance <= 0.8) {
+                            //console.log(typeof (doc.data()))
+                            CPUGrad = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+                        } else {
+                            CPUGrad = 'Nemam grad!';
+                        }
+                    }
+                    if (doc.data().kategorija == 'Biljka') {
+                        let pojmoviArray = [];
+                        let chance = Math.random();
+                        pojmoviArray.push(doc.data().pojam);
+
+                        if (chance <= 0.8) {
+                            //console.log(typeof (doc.data()))
+                            CPUBiljka = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+                        } else {
+                            CPUBiljka = 'Nemam biljku!';
+                        }
+                    }
+                    if (doc.data().kategorija == 'Životinja') {
+                        let pojmoviArray = [];
+                        let chance = Math.random();
+                        pojmoviArray.push(doc.data().pojam);
+
+                        if (chance <= 0.8) {
+                            //console.log(typeof (doc.data()))
+                            CPUZivotinja = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+                        } else {
+                            CPUZivotinja = 'Nemam zivotinju!';
+                        }
+                    }
+                    if (doc.data().kategorija == 'Predmet') {
+                        let pojmoviArray = [];
+                        let chance = Math.random();
+                        pojmoviArray.push(doc.data().pojam);
+
+                        if (chance <= 0.8) {
+                            //console.log(typeof (doc.data()))
+                            CPUPredmet = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+                        } else {
+                            CPUPredmet = 'Nemam predmet!';
+                        }
                     }
                 });
-                console.log(CPUDrzava);
+
+                let poklopoljeniPojmoviUsera = [];
+                poklopoljeniPojmoviUsera.push(pojmoviIzBaze.filter(x => formatiranUserInput.includes(x) /* || ''*/)); // Doesn't put empty strings in array when no matching value is found
+
+                // console.log(CPUDrzava);
+                // console.log(CPUReka);
+                // console.log(CPUPlanina);
+                // console.log(CPUGrad);
+                // console.log(CPUBiljka);
+                // console.log(CPUZivotinja);
+                // console.log(CPUPredmet);
+
+                let cpuPoeni = 0;
+                let userPoeni = 0;
+                let CPUNiz = [];
+                CPUNiz.push(CPUDrzava, CPUReka, CPUPlanina, CPUGrad, CPUBiljka, CPUZivotinja, CPUPredmet);
+
+                for (i = 0; i < CPUNiz.length; i++) {
+                    if (formatiranUserInput[i] != '' && (CPUNiz[i] == undefined || CPUNiz[i].includes('Nemam'))) {
+                        userPoeni += 15;
+                    }
+                    if (formatiranUserInput[i] == '' && (CPUNiz[i] != undefined || !CPUNiz[i].includes('Nemam'))) {
+                        cpuPoeni += 15;
+                    }
+                    if (formatiranUserInput[i] != '' && formatiranUserInput[i] != CPUNiz[i]) {
+                        userPoeni += 10;
+                        cpuPoeni += 10;
+                    }
+                    if (formatiranUserInput[i] != '' && formatiranUserInput[i] == CPUNiz[i]) {
+                        userPoeni += 5;
+                        cpuPoeni += 5;
+                        console.log('petica');
+                    }
+                }
+
+
+
+                console.log('CPU poeni: ' + cpuPoeni);
+                console.log('User poeni: ' + userPoeni);
+
+                console.log('USER INPUTS:');
+                console.log(formatiranUserInput); // Doesn't have chekcking if the term actually exists in DB
+                console.log('CPU INPUTS:');
+                console.log(CPUNiz);
+
             });
+
+        // pojmovi.where('pocetnoSlovo', '==', 'A').get() // REKA
+        // .then(snapshot => {
+        //     let CPUReka;
+        //     let pojmoviArray = [];
+        //     snapshot.docs.forEach(doc => {
+        //         if (doc.data().kategorija == 'Reka') {
+        //             let chance = Math.random();
+        //             pojmoviArray.push(doc.data().pojam);
+
+        //             if (chance <= 0.8) {
+        //                 //console.log(typeof (doc.data()))
+        //                 CPUReka = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+        //             } else {
+        //                 CPUReka = 'Nemam pojam!';
+        //             }
+        //             //console.log(CPUReka);
+        //         }
+        //     });
+        //     console.log(CPUReka);
+        // });
+
+        // pojmovi.where('pocetnoSlovo', '==', 'A').get() // PLANINA
+        // .then(snapshot => {
+        //     let CPUPlanina;
+        //     let pojmoviArray = [];
+        //     snapshot.docs.forEach(doc => {
+        //         if (doc.data().kategorija == 'Planina') {
+        //             let chance = Math.random();
+        //             pojmoviArray.push(doc.data().pojam);
+
+        //             if (chance <= 0.8) {
+        //                 //console.log(typeof (doc.data()))
+        //                 CPUPlanina = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+        //             } else {
+        //                 CPUPlanina = 'Nemam pojam!';
+        //             }
+        //             //console.log(CPUPlanina);
+        //         }
+        //     });
+        //     console.log(CPUPlanina);
+        // });
+
+        // pojmovi.where('pocetnoSlovo', '==', 'A').get() // GRAD
+        // .then(snapshot => {
+        //     let CPUGrad;
+        //     let pojmoviArray = [];
+        //     snapshot.docs.forEach(doc => {
+        //         if (doc.data().kategorija == 'Grad') {
+        //             let chance = Math.random();
+        //             pojmoviArray.push(doc.data().pojam);
+
+        //             if (chance <= 0.8) {
+        //                 //console.log(typeof (doc.data()))
+        //                 CPUGrad = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+        //             } else {
+        //                 CPUGrad = 'Nemam pojam!';
+        //             }
+        //             //console.log(CPUGrad);
+        //         }
+        //     });
+        //     console.log(CPUGrad);
+        // });
+
+        // pojmovi.where('pocetnoSlovo', '==', 'A').get() // BILJKA
+        // .then(snapshot => {
+        //     let CPUBiljka;
+        //     let pojmoviArray = [];
+        //     snapshot.docs.forEach(doc => {
+        //         if (doc.data().kategorija == 'Biljka') {
+        //             let chance = Math.random();
+        //             pojmoviArray.push(doc.data().pojam);
+
+        //             if (chance <= 0.8) {
+        //                 //console.log(typeof (doc.data()))
+        //                 CPUBiljka = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+        //             } else {
+        //                 CPUBiljka = 'Nemam pojam!';
+        //             }
+        //             //console.log(CPUBiljka);
+        //         }
+        //     });
+        //     console.log(CPUBiljka);
+        // });
+
+        // pojmovi.where('pocetnoSlovo', '==', 'A').get() // ZIVOTINJA
+        // .then(snapshot => {
+        //     let CPUZivotinja;
+        //     let pojmoviArray = [];
+        //     snapshot.docs.forEach(doc => {
+        //         if (doc.data().kategorija == 'Životinja') {
+        //             let chance = Math.random();
+        //             pojmoviArray.push(doc.data().pojam);
+
+        //             if (chance <= 0.8) {
+        //                 //console.log(typeof (doc.data()))
+        //                 CPUZivotinja = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+        //             } else {
+        //                 CPUZivotinja = 'Nemam pojam!';
+        //             }
+        //             //console.log(CPUZivotinja);
+        //         }
+        //     });
+        //     console.log(CPUZivotinja);
+        // });            
+
+        // pojmovi.where('pocetnoSlovo', '==', 'A').get() // PREDMET
+        // .then(snapshot => {
+        //     let CPUPredmet;
+        //     let pojmoviArray = [];
+        //     snapshot.docs.forEach(doc => {
+        //         if (doc.data().kategorija == 'Predmet') {
+        //             let chance = Math.random();
+        //             pojmoviArray.push(doc.data().pojam);
+
+        //             if (chance <= 0.8) {
+        //                 //console.log(typeof (doc.data()))
+        //                 CPUPredmet = pojmoviArray[Math.floor(Math.random() * pojmoviArray.length)];
+        //             } else {
+        //                 CPUPredmet = 'Nemam pojam!';
+        //             }
+        //             //console.log(CPUPredmet);
+        //         }
+        //     });
+        //     console.log(CPUPredmet);
+        //     console.log('KRAJ')
+        // });
+
 
         //console.log(pocetnaSlova);
         //console.log(formatiranUserInput);
