@@ -18,7 +18,10 @@ let usrPlanina = document.querySelector('#inputPlanina');
 let usrGrad = document.querySelector('#inputGrad');
 let usrBiljka = document.querySelector('#inputBiljka');
 let usrZivotinja = document.querySelector('#inputZivotinja');
-let usrPredmet = document.querySelector('#inputPredmet');
+let userPoeni_display = document.querySelector('#userPoeni');
+let cpuPoeni_display = document.querySelector('#cpuPoeni');
+let pobeda = document.querySelector('#pobeda');
+
 
 
 //console.log(linkPojmovi);
@@ -61,7 +64,7 @@ if (location.pathname.includes('dodaj_pojam.html')) {
             let specialPocetnoSlovo;
             //console.log(document.querySelector('select').value);
             //console.log(formatiranPojam);
-
+7
             if (noWhitespace.slice(0, 2) == 'nj' || noWhitespace.slice(0, 2) == 'lj' || noWhitespace.slice(0, 2) == 'dž') {
                 specialPocetnoSlovo = noWhitespace.charAt(0).toUpperCase() + noWhitespace.charAt(1);
             } else {
@@ -150,7 +153,7 @@ pojmovi
 
 if (location.pathname.includes('covek_vs_cpu.html')) {
 
-    let abeceda = ['A', 'B', 'C', 'Č', 'Ć', 'D', 'Dž', 'Đ', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Lj', 'N', 'M', 'Nj', 'O', 'P', 'R', 'S', 'Š', 'T', 'U', 'V', 'Z', 'Ž'];
+    let abeceda = ['A','A','A','A','A','A', 'B', 'C', 'Č', 'Ć', 'D', 'Dž', 'Đ', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Lj', 'N', 'M', 'Nj', 'O', 'P', 'R', 'S', 'Š', 'T', 'U', 'V', 'Z', 'Ž'];
     let radnomSlovo = abeceda[Math.floor(Math.random() * abeceda.length)];
     document.querySelector('#rSlovo').innerHTML = `Nasumicno izabrano slovo je:  <strong class='badge badge-primary text-wrap' ><h5>${radnomSlovo}</h5></strong>`;
 
@@ -193,7 +196,7 @@ if (location.pathname.includes('covek_vs_cpu.html')) {
 
         /*--------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-        pojmovi.where('pocetnoSlovo', '==', 'A').get() // DRZAVA
+        pojmovi.where('pocetnoSlovo', '==', radnomSlovo).get() // DRZAVA
             .then(snapshot => {
                 let pojmoviIzBaze = [];
                 let CPUDrzava;
@@ -307,34 +310,48 @@ if (location.pathname.includes('covek_vs_cpu.html')) {
                 let cpuPoeni = 0;
                 let userPoeni = 0;
                 let CPUNiz = [];
+
                 CPUNiz.push(CPUDrzava, CPUReka, CPUPlanina, CPUGrad, CPUBiljka, CPUZivotinja, CPUPredmet);
 
                 for (i = 0; i < CPUNiz.length; i++) {
-                    if (formatiranUserInput[i] != '' && (CPUNiz[i] == undefined || CPUNiz[i].includes('Nemam'))) {
-                        userPoeni += 15;
-                    }
-                    if (formatiranUserInput[i] == '' && (CPUNiz[i] != undefined || !CPUNiz[i].includes('Nemam'))) {
-                        cpuPoeni += 15;
-                    }
-                    if (formatiranUserInput[i] != '' && formatiranUserInput[i] != CPUNiz[i]) {
-                        userPoeni += 10;
-                        cpuPoeni += 10;
-                    }
-                    if (formatiranUserInput[i] != '' && formatiranUserInput[i] == CPUNiz[i]) {
-                        userPoeni += 5;
-                        cpuPoeni += 5;
-                        console.log('petica');
-                    }
+                    //console.log(pojmoviIzBaze.includes(formatiranUserInput[i])) ;
+
+                    // if(pojmoviIzBaze.includes(formatiranUserInput[i])) {
+                        
+                        if (pojmoviIzBaze.includes(formatiranUserInput[i]) != '' && (CPUNiz[i] == undefined || CPUNiz[i].includes('Nemam'))) {
+                            userPoeni += 15;
+                        }
+                        if (pojmoviIzBaze.includes(formatiranUserInput[i]) == '' && (CPUNiz[i] != undefined || !CPUNiz[i].includes('Nemam'))) {
+                            cpuPoeni += 15;
+                        }
+                        if (pojmoviIzBaze.includes(formatiranUserInput[i]) != '' && formatiranUserInput[i] != CPUNiz[i]) {
+                            userPoeni += 10;
+                            cpuPoeni += 10;
+                        }
+                        if (pojmoviIzBaze.includes(formatiranUserInput[i]) != '' && formatiranUserInput[i] == CPUNiz[i]) {
+                            userPoeni += 5;
+                            cpuPoeni += 5;
+                        }
+                    // }
                 }
 
+                userPoeni_display.innerHTML = `Poeni korisnika: ${userPoeni}`;
+                cpuPoeni_display.innerHTML = `CPU korisnika: ${cpuPoeni}`;
+                if(cpuPoeni > userPoeni) {
+                    pobeda.innerHTML = `Pobedio je CPU!`;
+                } else if (cpuPoeni == userPoeni) {
+                    pobeda.innerHTML = `Nereseno!`;
+                } else {
+                    pobeda.innerHTML = `Pobedio je human!`;                    
+                }
 
 
                 console.log('CPU poeni: ' + cpuPoeni);
                 console.log('User poeni: ' + userPoeni);
 
-                console.log('USER INPUTS:');
+                console.log('USER INPUTS: ');
                 console.log(formatiranUserInput); // Doesn't have chekcking if the term actually exists in DB
-                console.log('CPU INPUTS:');
+                console.log('CPU INPUTS: ');
                 console.log(CPUNiz);
 
             });
