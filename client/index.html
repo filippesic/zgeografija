@@ -1,29 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <title>RPS</title>
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div class="rps-wrapper">
-      <ul id="events"></ul>
-      <div class="controls">
-        <div class="chat-wrapper">
-          <form id="chat-form">
-            <input id="chat" autocomplete="off" title="chat"/>
-            <button id="say">Say</button>
-          </form>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="col-10 mt-1">
+        <header>
+            <h1 class="h1 text-center bg-primary p-2 text-white rounded-sm">Zanimljiva Geografija</h1>
+        </header>
+
+        <div id="divUser" class="alert-info mb-2 text-center rounded-sm"></div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Pocetna</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="linkPojmovi" class="nav-link" href="dodaj_pojam.html">Pojmovi</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <button class="btn btn-danger btn-block" id="startTimer">Start</button>
+        <div class="alert alert-warning mt-2" role="alert" id="vreme"></div>
+        <div class="alert alert-success mt-2 text-center" role="alert">
+            Nasumicno izabrano slovo je:<strong class='badge badge-primary text-wrap'><h5 id="rSlovo"></h5></strong></div>
+        <div class="row" role="alert" id="poeni">
+            <div class="col ml-3 mr-1 alert alert-info mt-2 text-center" role="alert" id="userPoeni"></div>
+            <div class="col mr-3 alert alert-info mt-2 text-center" role="alert" id="cpuPoeni"></div>
+        </div>
+        <div class="alert alert-danger mt-2 text-center" role="alert" id="pobeda"></div>
+
+        <form id="formStartGame">
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Država:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputDrzava" placeholder="Unesite državu..">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label">Reka:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputReka" placeholder="Unesite reku..">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Planina:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPlanina" placeholder="Unesite planinu..">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Grad:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputGrad" placeholder="Unesite grad..">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Biljka:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputBiljka" placeholder="Unesite biljku..">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Životinja:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputZivotinja" placeholder="Unesite životinju..">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Predmet:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPredmet" placeholder="Unesite predmet..">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <input type="submit" class="btn btn-warning btn-block" value="Potvrdi">
+                </div>
+            </div>
+        </form>
+
+        <div class="rps-wrapper">
+            <ul id="events"></ul>
+            <div class="controls">
+                <div class="chat-wrapper">
+                    <form id="chat-form">
+                        <input id="chat" autocomplete="off" title="chat"/>
+                        <button id="say">Say</button>
+                    </form>
+                </div>
+
+                <div class="button-wrapper">
+                    <button id="rock" class="turn">Rock</button>
+                    <button id="paper" class="turn">Paper</button>
+                    <button id="scissors" class="turn">Scissors</button>
+                </div>
+            </div>
         </div>
 
-        <div class="button-wrapper">
-          <button id="rock" class="turn">Rock</button>
-          <button id="paper" class="turn">Paper</button>
-          <button id="scissors" class="turn">Scissors</button>
-        </div>
-      </div>
     </div>
+</div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="client.js"></script>
-  </body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-firestore.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyCHqmuodWdVSdcXzbBNLhhm9TuU0G3ljwE",
+        authDomain: "zgeografija-7bacb.firebaseapp.com",
+        databaseURL: "https://zgeografija-7bacb.firebaseio.com",
+        projectId: "zgeografija-7bacb",
+        storageBucket: "zgeografija-7bacb.appspot.com",
+        messagingSenderId: "548869104442",
+        appId: "1:548869104442:web:dbc23fa5d2b413b5b52603",
+        measurementId: "G-1DJLY0GVSD"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
+    let db = firebase.firestore();
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+</body>
 </html>
