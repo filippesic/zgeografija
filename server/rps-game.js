@@ -3,7 +3,7 @@ class Rpsgame {
         this._players = [p1, p2];
         this._turns = [null, null];
         this._points = [0, 0];
-
+        this._both = [];
 
         this._sendToPlayers('Zanimljiva geografija pocinje..');
 
@@ -29,7 +29,7 @@ class Rpsgame {
         this._turns[playerIndex] = turn; // adds a checkedUserInput from the client side
         this._sendToPlayer(playerIndex, `Uneli ste vasa polja`);
 
-        if((this._turns[0] && this._turns[1]) != null) {
+        if ((this._turns[0] && this._turns[1]) != null) {
             this._getGameResult();
             this._checkGameOver();
         }
@@ -37,34 +37,39 @@ class Rpsgame {
 
     _checkGameOver() {
         // const turns = this._turns;
-        console.log('check game over');
-            this._sendToPlayers('Game Over: ', this._points.join(' <---> '));
-            this._getGameResult();
-            //this._turns = [null, null];
-            this._sendToPlayers('<---------------------Next Round--------------------->');
+        //console.log('check game over');
+        this._sendToPlayers('Game Over: ', this._points.join(' <---> '));
+        this._getGameResult();
+        //this._turns = [null, null];
+        this._sendToPlayers('<---------------------Next Round--------------------->');
     }
 
     _getGameResult() {
-        console.log((this._turns[0] && this._turns[1]) !== (null || undefined));
+        //console.log((this._turns[0] && this._turns[1]) !== (null || undefined));
         // if((this._turns[0] && this._turns[1]) != null) {
-            // kad jedan submit onda se odmah proveri, a ne kad oba submit
+        // kad jedan submit onda se odmah proveri, a ne kad oba submit
 
-            for (let i = 0; i < this._turns.length; i++) {
-                for (let j = 1; j <= this._turns[i].length; j++) {
-                    if (this._turns[i][i] === this._turns[j][i]) {
-                        this._points[0] += 5;
-                        this._points[1] += 5;
-                    } else if (this._turns[i][i] !== this._turns[j][i]) {
-                        this._points[0] += 10;
-                        this._points[1] += 10;
+        let player1Data = this._turns[0];
+        let player2Data = this._turns[1];
+        console.log(player1Data, 'player1D');
+        console.log(player2Data, 'plater2D');
 
-                    } else if (this._turns[i][i] !== '' && this._turns[j][i] === '') {
-                        this._points[0] += 15;
-                    } else if (this._turns[i][i] === '' && this._turns[j][i] !== '') {
-                        this._points[1] += 15;
-                    }
-                }
+
+        for (let i = 0; i < player1Data; i++) {
+            if (player1Data[i] == player2Data[i]) {
+                this._points[0] += 5;
+                this._points[1] += 5;
+            } else if (player1Data[i] != player2Data[i]) {
+                this._points[0] += 10;
+                this._points[1] += 10;
+            } else if (player1Data[i] != '' && player2Data[i] == '') {
+                this._points[0] += 15;
+            } else if (player1Data[i] == '' && player2Data[i] != '') {
+                this._points[1] += 15;
             }
+        }
+
+        console.log(this._points);
         // }
         // const p0 = this._decodeTurn(this._turns[0]);
         // const p1 = this._decodeTurn(this._turns[1]);
