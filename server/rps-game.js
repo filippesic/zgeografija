@@ -3,7 +3,6 @@ class Rpsgame {
         this._players = [p1, p2];
         this._turns = [null, null];
         this._points = [0, 0];
-        this._both = [];
 
         this._sendToPlayers('Zanimljiva geografija pocinje..');
 
@@ -36,19 +35,16 @@ class Rpsgame {
     }
 
     _checkGameOver() {
-        // const turns = this._turns;
-        //console.log('check game over');
-        this._sendToPlayers('Game Over: ', this._points.join(' <---> '));
-        this._getGameResult();
-        //this._turns = [null, null];
-        this._sendToPlayers('<---------------------Next Round--------------------->');
+        const turns = this._turns;
+        if (turns[0] && turns[1]) {
+            this._sendToPlayers('Game Over: ', this._points.join(' <---> '));
+            this._getGameResult();
+            //this._turns = [null, null];
+            this._sendToPlayers('<---------------------Next Round--------------------->');
+        }
     }
 
     _getGameResult() {
-        //console.log((this._turns[0] && this._turns[1]) !== (null || undefined));
-        // if((this._turns[0] && this._turns[1]) != null) {
-        // kad jedan submit onda se odmah proveri, a ne kad oba submit
-
         let player1Data = this._turns[0];
         let player2Data = this._turns[1];
         console.log(player1Data, 'player1D');
@@ -56,19 +52,37 @@ class Rpsgame {
 
 
         for (let i = 0; i < player1Data; i++) {
-            if (player1Data[i] == player2Data[i]) {
+            console.log(i, 'i');
+            console.log(player1Data.length, 'playerData length');
+            if(player1Data == '') {
+                this._points[0] = 0;
+                console.log('p1 0');
+            }
+            if(player2Data == '') {
+                this._points[1] = 0;
+                console.log('p2 0');
+            }
+            if (player1Data[i] == player2Data[i] && player2Data != '') {
                 this._points[0] += 5;
                 this._points[1] += 5;
-            } else if (player1Data[i] != player2Data[i]) {
+                console.log('5');
+            }
+            if (player1Data[i] != player2Data[i]) {
                 this._points[0] += 10;
                 this._points[1] += 10;
-            } else if (player1Data[i] != '' && player2Data[i] == '') {
+                console.log('10');
+            }
+            if (player1Data[i] != '' && player2Data[i] == '') {
                 this._points[0] += 15;
-            } else if (player1Data[i] == '' && player2Data[i] != '') {
+                console.log('p1 15');
+            }
+            if (player1Data[i] == '' && player2Data[i] != '') {
                 this._points[1] += 15;
+                console.log('p2 15');
             }
         }
 
+        console.log(this._points[0] += 5); // ovde radi, a u ifu ne
         console.log(this._points);
         // }
         // const p0 = this._decodeTurn(this._turns[0]);
