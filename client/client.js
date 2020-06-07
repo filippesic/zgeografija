@@ -2,7 +2,7 @@ let formStartGame = document.querySelector('#formStartGame');
 let formInputs = document.querySelectorAll('#formStartGame input');
 let alphabet = ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'B',
     'C', 'Č', 'Ć', 'D', 'Dž', 'Đ', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Lj', 'N', 'M', 'Nj', 'O', 'P', 'R', 'S', 'Š', 'T', 'U', 'V', 'Z', 'Ž'];
-let randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+let randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)]; // NEEDS TO MOVE TO SERVER
 let termsCollection = db.collection('pojmovi');
 
 const writeEvent = (text) => {
@@ -53,7 +53,7 @@ formStartGame.addEventListener('submit', e => {
         .then(snapshot => {
             let DBTerms = [];
             snapshot.docs.forEach(doc => {
-                console.log('unutar fora');
+                // console.log('unutar fora');
                 DBTerms.push(doc.data().pojam);
                 //console.log(DBTerms, 'DBTerms');
                 if (doc.data().kategorija === 'Država' && DBTerms.includes(formattedUserInput[0])) { // bad logic

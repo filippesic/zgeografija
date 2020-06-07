@@ -51,23 +51,14 @@ class Rpsgame {
         console.log(player2Data, 'plater2D');
 
 
-        for (let i = 0; i < player1Data; i++) {
-            console.log(i, 'i');
-            console.log(player1Data.length, 'playerData length');
-            if(player1Data == '') {
-                this._points[0] = 0;
-                console.log('p1 0');
-            }
-            if(player2Data == '') {
-                this._points[1] = 0;
-                console.log('p2 0');
-            }
+        for (let i = 0; i < player1Data.length; i++) { // .length was missing
+
             if (player1Data[i] == player2Data[i] && player2Data != '') {
                 this._points[0] += 5;
                 this._points[1] += 5;
                 console.log('5');
             }
-            if (player1Data[i] != player2Data[i]) {
+            if (player1Data[i] != player2Data[i] && player2Data != '') {
                 this._points[0] += 10;
                 this._points[1] += 10;
                 console.log('10');
